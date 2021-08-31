@@ -39,6 +39,7 @@ get_wordcount_df <- function(d, search_word) {
     count(word, sort = T) %>% 
     # Remove numbers 
     filter(!str_detect(word,"\\b\\d+\\b"),
+           !str_detect(word, tolower(search_word)),
            word != tolower(search_word)) %>% 
     # Uppercase first letter
     mutate(word =  str_to_title(word))

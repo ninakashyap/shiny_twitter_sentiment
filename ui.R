@@ -5,14 +5,24 @@
 # Created 2021-08-30 20:39:17
 ###############################################################################
 
+
+# Libraries ---------------------------------------------------------------
+
+library(shiny)
+library(highcharter)
+
+
+# UI ----------------------------------------------------------------------
+
 ui <- fluidPage(
   # Input functions
-  sliderInput(inputId = 'num',
-              label = 'Choose a num',
-              value = 5,
-              min = 1,
-              max = 100
-              ),
+  textInput(inputId = 'search_term',
+            label = 'Search a topic',
+            value = 'covid',
+            placeholder = '#covid-19'
+            ),
+  actionButton(inputId = 'submit_button',
+               label = 'Submit'),
   # Output functions 
-  plotOutput('hist')
+  highchartOutput('words_plot')
 )

@@ -31,7 +31,7 @@ plot_top10_words <- function(df, search_word) {
            hcaes(x = word, y = n),
            name = 'Frequency'
     ) %>% 
-    hc_title(text = "Top 10 Most Common Words In Recent Tweets") %>% 
+    hc_title(text = paste("Top 10 Words In Recent Tweets About ", str_to_title(search_word))) %>% 
     hc_xAxis(title = list(text = "Word")) %>% 
     hc_yAxis(title = list(text = "Frequency")) 
   
