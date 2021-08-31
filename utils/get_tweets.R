@@ -11,6 +11,7 @@
 library(rtweet)
 library(tidyverse)
 
+
 # Functions ------------------------------------------------------------------
 
 get_tweets <- function(search_word) {

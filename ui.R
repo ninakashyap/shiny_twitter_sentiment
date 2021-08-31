@@ -18,11 +18,13 @@ ui <- fluidPage(
   # Input functions
   textInput(inputId = 'search_term',
             label = 'Search a topic',
-            value = 'covid',
+            #value = 'covid',
             placeholder = '#covid-19'
             ),
   actionButton(inputId = 'submit_button',
                label = 'Submit'),
   # Output functions 
-  highchartOutput('words_plot')
+  highchartOutput('wordcloud'),
+  highchartOutput('hashtags'),
+  highchartOutput('piechart')
 )

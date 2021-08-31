@@ -7,26 +7,15 @@
 
 # Libraries  --------------------------------------------------------------
 
-# library(rtweet)
 library(tidyverse)
 library(tidytext)
-
-
-# # Function to retrieve twitter data for search term  ----------------------
-# 
-# get_tweets <- function(search_word) {
-#   # ONLY RETURNS DATA FROM THE PAST 6-9 DAYS
-#   search_tweets(q = search_word,
-#                 #type = 'popular',
-#                 n = 1000,
-#                 lang = 'en',
-#                 include_rts = F)
-# }
+library(sentimentr)
 
 
 # Function to get word counts ------------------------------
 
 get_wordcount_df <- function(d, search_word) {
+  print('Tidying world count dataset')
   d %>% 
     select(text) %>% 
     # Remove http elements
@@ -48,4 +37,31 @@ get_wordcount_df <- function(d, search_word) {
 
 # Function to get hashtag counts ------------------------------
 
-#get_hastag_df
+get_hashtag_count_df <- function(d, search_word) {
+  d %>% 
+    select(hashtags) %>% 
+    unnest(cols = c(hashtags)) %>% 
+    filter(!is.na(hashtags)) %>% 
+    count(hashtags, sort=TRUE) %>% 
+    filter(tolower(hashtags) != tolower(search_word)) %>% 
+    # Add hastag prefix
+    mutate(hashtags = paste('#', hashtags))
+}
+
+
+# Function to get polarity score for each tweet ---------------------------
+
+get_sentiment_df <- function(d) {
+  sentiment(d$text) %>% 
+    filter(!is.na(word_count)) %>% 
+    group_by(element_id) %>% 
+    mutate(weight = word_count/sum(word_count)) %>%
+    ungroup() %>% 
+    mutate(sentimentxweight = sentiment * weight) %>% 
+    group_by(element_id) %>% 
+    summarise(sentiment = sum(sentimentxweight)) %>% 
+    cbind(d) %>% 
+    filter(sentiment !=0)  %>% 
+    mutate(positive = ifelse(sentiment > 0, 1, 0))
+}
+
