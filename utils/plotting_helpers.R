@@ -50,8 +50,8 @@ plot_top_words_wordcloud <- function(df, search_word) {
   df_clean %>% 
     head(50) %>% 
     hchart("wordcloud", 
-           hcaes(name = word, weight = n),
-           name = 'Frequency') %>% 
+           hcaes(name = word, weight = log(n)),
+           name = 'Log Frequency') %>% 
     hc_title(text = paste("Top Words In Recent Tweets About ", str_to_title(search_word)))
   
 }

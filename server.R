@@ -9,11 +9,13 @@
 
 library(shiny)
 library(highcharter)
+library(twitterwidget)
 
 # Helper functions --------------------------------------------------------
 source('utils/get_tweets.R')
 source('utils/plotting_helpers.R')
 source('utils/data_helpers.R')
+source('utils/twitter_widget_helpers.R')
 
 # Server ------------------------------------------------------------------
 
@@ -26,11 +28,16 @@ server <- function(input, output) {
   output$wordcloud <- renderHighchart({
     plot_top_words_wordcloud(df_tweets(), isolate(input$search_term))
   })
-    
+  
   # Top hashtags plot
   output$hashtags <- renderHighchart({
     plot_top5_hashtags(df_tweets(), isolate(input$search_term))
    })
+  
+  # Twitter widget
+  output$twitter <- renderTwitterwidget({
+    get_positive_tweet_widget(df_tweets())
+  })
   
   # Sentiment pie chart 
   output$piechart <- renderHighchart({
