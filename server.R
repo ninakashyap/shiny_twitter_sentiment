@@ -10,6 +10,7 @@
 library(shiny)
 library(highcharter)
 library(twitterwidget)
+library(shinyjs)
 
 # Helper functions --------------------------------------------------------
 source('utils/get_tweets.R')
@@ -39,6 +40,20 @@ server <- function(input, output) {
   
   # Get data 
   df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term)})
+  
+  # Downloadable csv of selected dataset 
+  observeEvent(input$submit_button, {
+    enable('downloadData')
+  })
+  
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(isolate(input$search_term), '.csv', sep = '')
+    },
+    content = function(file) {
+      write_csv(df_tweets(), file)
+    }
+  )
   
   # Wordcloud
   output$wordcloud <- renderHighchart({

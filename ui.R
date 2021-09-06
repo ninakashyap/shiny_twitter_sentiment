@@ -12,11 +12,13 @@ library(shiny)
 library(highcharter)
 library(bslib)
 library(twitterwidget)
+library(shinyjs)
 
 
 # UI ----------------------------------------------------------------------
 
 ui <- fluidPage(
+  useShinyjs(),
   
   # CSS
   tags$style(type="text/css", "
@@ -51,7 +53,9 @@ ui <- fluidPage(
       ),
       actionButton(inputId = 'submit_button',
                    label = 'Submit'
-      )
+      ),
+      # Button
+      disabled(downloadButton('downloadData', 'Download Data'))
     
   ),
   
@@ -67,7 +71,7 @@ ui <- fluidPage(
     ),
 
   fluidRow(
-    column(4, highchartOutput('piechart')),
-    column(4, twitterwidgetOutput('twitter', width = "100%", height = "400px"))
+    column(6, highchartOutput('piechart')),
+    column(6, twitterwidgetOutput('twitter', width = "100%", height = "400px"))
     )
 )
