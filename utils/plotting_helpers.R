@@ -73,7 +73,8 @@ plot_top5_hashtags <- function(df, search_word) {
     ) %>% 
     hc_title(text = paste("Top 5 Hashtags In Recent Tweets About ", str_to_title(search_word))) %>% 
     hc_xAxis(title = list(text = "Hashtag")) %>% 
-    hc_yAxis(title = list(text = "Frequency")) 
+    hc_yAxis(title = list(text = "Frequency")) %>% 
+    hc_colors(c('#EF7579'))
   
 }
 

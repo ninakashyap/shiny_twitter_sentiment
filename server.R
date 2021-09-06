@@ -21,6 +21,22 @@ source('utils/twitter_widget_helpers.R')
 
 server <- function(input, output) {
   
+  # Clear twitter widget
+  # observeEvent(input$search_term, {
+  #   removeUI("div:has(> #twitter)")
+  # })
+  
+  # Title
+  rv <- reactiveVal('...')
+  
+  observeEvent(input$submit_button, {
+    rv(isolate(input$search_term))
+  })
+  
+  output$text_header <- renderUI({
+    h1(paste('How The World Feels About', rv(), 'Right Now'), align = 'center')
+  })
+  
   # Get data 
   df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term)})
   
@@ -35,9 +51,7 @@ server <- function(input, output) {
    })
   
   # Twitter widget
-  output$twitter <- renderTwitterwidget({
-    get_positive_tweet_widget(df_tweets())
-  })
+  output$twitter <- renderTwitterwidget(get_positive_tweet_widget(df_tweets()))
   
   # Sentiment pie chart 
   output$piechart <- renderHighchart({
