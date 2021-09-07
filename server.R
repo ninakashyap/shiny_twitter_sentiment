@@ -34,12 +34,21 @@ server <- function(input, output) {
     rv(isolate(input$search_term))
   })
   
-  output$text_header <- renderUI({
-    h1(paste('How The World Feels About', rv(), 'Right Now'), align = 'center')
+  output$text_header <- renderText({
+    # h3(
+      paste('How The World Feels About', rv(), 'Right Now')
+      # ,align = 'center'
+      #  )
   })
   
   # Get data 
   df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term)})
+  
+  observeEvent(df_tweets(), {
+    # Refresh the `twitter_output` div
+    print("refreshingggggggggg")
+    shinyjs::js$refresh()
+  })
   
   # Downloadable csv of selected dataset 
   observeEvent(input$submit_button, {
