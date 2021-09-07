@@ -15,7 +15,7 @@ library(sentimentr)
 # Function to get word counts ------------------------------
 
 get_wordcount_df <- function(d, search_word) {
-  print('Tidying world count dataset')
+
   d %>% 
     select(text) %>% 
     # Remove http elements
@@ -66,9 +66,9 @@ get_sentiment_df <- function(d) {
     ungroup() %>% 
     mutate(sentimentxweight = sentiment * weight) %>% 
     group_by(element_id) %>% 
-    summarise(sentiment = sum(sentimentxweight)) %>% 
+    summarise(sentiment = sum(sentimentxweight, na.rm = T)) %>% 
     cbind(d) %>% 
-    filter(sentiment !=0)  %>% 
+    filter(sentiment != 0, !is.na(sentiment))  %>% 
     mutate(positive = ifelse(sentiment > 0, 1, 0))
 }
 

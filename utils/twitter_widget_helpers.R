@@ -24,7 +24,5 @@ get_positive_tweet_widget <- function(df) {
     filter(sentiment == max(sentiment)) %>% 
     pull(status_id)
   
-  print(df_sentiment %>% select(text, sentiment) %>% filter(sentiment == max(sentiment)))
-  
   twitterwidget(tweet_id)
 }

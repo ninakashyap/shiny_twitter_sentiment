@@ -46,7 +46,6 @@ plot_top_words_wordcloud <- function(df, search_word) {
   df_clean <- get_wordcount_df(df, search_word)
   
   # Plot
-  print('Plotting wordcloud')
   df_clean %>% 
     head(50) %>% 
     hchart("wordcloud", 
@@ -74,7 +73,7 @@ plot_top5_hashtags <- function(df, search_word) {
     hc_title(text = paste("Top 5 Hashtags In Recent Tweets About ", str_to_title(search_word))) %>% 
     hc_xAxis(title = list(text = "Hashtag")) %>% 
     hc_yAxis(title = list(text = "Frequency")) %>% 
-    hc_colors(c('#EF7579'))
+    hc_colors(c('#5DA9DD'))
   
 }
 
@@ -94,7 +93,9 @@ plot_sentiment_pie <- function(df) {
            hcaes(x = positive, y = n),
            name = "Number Of Tweets") %>% 
     hc_plotOptions(
-      pie = list(colors = c("#E5E5E5", "#DE1219"))
+      pie = list(colors = c("#E5E5E5", 
+                            #"#DE1219", 
+                            '#5DA9DD'))
     )
   
 }
