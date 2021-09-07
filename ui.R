@@ -39,7 +39,7 @@ ui <- dashboardPage(
     
     extendShinyjs(
       text = "shinyjs.refresh = function() {
-      var div = document.getElementById('twitter_output');
+      var div = document.getElementById('twitter');
       while(div.firstChild){
       div.removeChild(div.firstChild);
       }
