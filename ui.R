@@ -10,68 +10,118 @@
 
 library(shiny)
 library(highcharter)
-library(bslib)
+#library(bslib)
 library(twitterwidget)
 library(shinyjs)
-
+library(shinydashboard)
+library(dashboardthemes)
 
 # UI ----------------------------------------------------------------------
 
-ui <- fluidPage(
-  useShinyjs(),
-  
-  # CSS
-  tags$style(type="text/css", "
-           #loadmessage {
-             position: fixed;
-             top: 0px;
-             left: 0px;
-             width: 100%;
-             padding: 5px 0px 5px 0px;
-             text-align: center;
-             font-weight: bold;
-             font-size: 100%;
-             color: #000000;
-             background-color: #EF7579;
-             z-index: 105;
-             }
-             "),
-  
-  # Theme
-  theme = bs_theme(version = 4, bootswatch = "minty"),
-  
-  # Title
-  uiOutput('text_header'),
-  
-  # Input functions
-  wellPanel(
-      textInput(inputId = 'search_term',
-                label = 'Search tweets from the last 6-9 days:',
-                #value = 'covid',
-                placeholder = '#covid-19',
-                width = '90%'
-      ),
-      actionButton(inputId = 'submit_button',
-                   label = 'Submit'
-      ),
-      # Button
-      disabled(downloadButton('downloadData', 'Download Data'))
-    
+ui <- dashboardPage(
+
+  # Title 
+  dashboardHeader(title = uiOutput('text_header'),
+                  titleWidth = 500
+                  ),
+
+  # Sidebar 
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Summary Dashboard", tabName = "summary", icon = icon("chart-bar")),
+      menuItem("Tweet Wall", tabName = "twitter", icon = icon("twitter"))
+    )
   ),
   
-  # Loading panel
-  conditionalPanel(condition="$('html').hasClass('shiny-busy')",
-                   tags$div("Loading...",id="loadmessage")
-                   ),
-  
-  # Output functions 
-  fluidRow(
-    column(6, highchartOutput('hashtags')),
-    column(6, highchartOutput('wordcloud'))
+  # Body
+  dashboardBody(
+    useShinyjs(),
+    
+    extendShinyjs(
+      text = "shinyjs.refresh = function() {
+      var div = document.getElementById('twitter_output');
+      while(div.firstChild){
+      div.removeChild(div.firstChild);
+      }
+      }",
+    functions = c("refresh")
     ),
-
-  fluidRow(
-    column(6, highchartOutput('piechart')),
-    column(6, twitterwidgetOutput('twitter', width = "100%", height = "400px"))
+    
+    # Theme
+    shinyDashboardThemes(
+      theme = "poor_mans_flatly"
+    ),
+    # 
+    # # CSS
+    # tags$style(type="text/css", "
+    #            #loadmessage {
+    #            position: fixed;
+    #            top: 0px;
+    #            left: 0px;
+    #            width: 100%;
+    #            padding: 5px 0px 5px 0px;
+    #            text-align: center;
+    #            font-weight: bold;
+    #            font-size: 100%;
+    #            color: #000000;
+    #            background-color: #EF7579;
+    #            z-index: 105;
+    #            }
+    #            "),
+    tabItems(
+      
+      # Summary dashboard
+      tabItem(
+        tabName = "summary",
+        # Input functions
+        wellPanel(
+          fluidRow(
+            # Search bar
+            textInput(inputId = 'search_term',
+                      label = 'Search tweets from the last 6-9 days:',
+                      placeholder = '#covid-19',
+                      width = '50%'
+            ),
+            # Number of tweets
+            sliderInput(
+              inputId = 'n_tweets',
+              label = 'Number of tweets',
+              value = 1000,
+              min = 1,
+              max = 10000,
+              width = '20%'
+            )),
+          fluidRow(
+            # Submitt button 
+            actionButton(inputId = 'submit_button',
+                         label = 'Submit'
+            ),
+            # Downlaod button
+            disabled(downloadButton('downloadData', 'Download Data'))
+          )
+        ),
+        
+        # Loading panel
+        conditionalPanel(condition = "$('html').hasClass('shiny-busy')",
+                         tags$div("Loading...", id = "loadmessage")
+                         ),
+        
+        # Output functions 
+        fluidRow(
+          column(6, highchartOutput('hashtags')),
+          column(6, highchartOutput('wordcloud'))
+          ),
+      
+        fluidRow(
+          column(6, highchartOutput('piechart')),
+          column(6, twitterwidgetOutput('twitter', width = "100%", height = "400px"))
+          )
+      ),
+      
+    # Tweet wall
+    tabItem(
+      tabName = "twitter"
+      )
     )
+  )
 )
