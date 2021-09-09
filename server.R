@@ -22,11 +22,6 @@ source('utils/twitter_widget_helpers.R')
 
 server <- function(input, output) {
   
-  # Clear twitter widget
-  # observeEvent(input$search_term, {
-  #   removeUI("div:has(> #twitter)")
-  # })
-  
   # Title
   rv <- reactiveVal('...')
   
@@ -42,12 +37,22 @@ server <- function(input, output) {
   })
   
   # Get data 
-  df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term)})
   
+  df_tweets <- eventReactive(input$submit_button, {
+    withProgress(message = 'Creating plot', style = 'notification', value = 0.1, {
+      for (i in 1:15) {
+        incProgress(1/15)
+        Sys.sleep(0.25)
+      }
+      })
+    get_tweets(input$search_term)
+    })
+    
+  # Refresh the `twitter_output` div
   observeEvent(df_tweets(), {
-    # Refresh the `twitter_output` div
-    print("refreshingggggggggg")
     shinyjs::js$refresh()
+    shinyjs::js$refresh1()
+    shinyjs::js$refresh2()
   })
   
   # Downloadable csv of selected dataset 
@@ -64,6 +69,8 @@ server <- function(input, output) {
     }
   )
   
+  # Summary tab
+  
   # Wordcloud
   output$wordcloud <- renderHighchart({
     plot_top_words_wordcloud(df_tweets(), isolate(input$search_term))
@@ -74,11 +81,25 @@ server <- function(input, output) {
     plot_top5_hashtags(df_tweets(), isolate(input$search_term))
    })
   
-  # Twitter widget
-  output$twitter <- renderTwitterwidget(get_positive_tweet_widget(df_tweets()))
+  # Top tweet
+  output$top_tweet <- renderTwitterwidget({
+    get_top_tweet_widget(df_tweets())
+  })
   
   # Sentiment pie chart 
   output$piechart <- renderHighchart({
     plot_sentiment_pie(df_tweets())
+  })
+  
+  # Twitter Tab
+  
+  # Most postitive tweet
+  output$positive_tweet <- renderTwitterwidget({
+    get_positive_tweet_widget(df_tweets())
+  })
+  
+  # Most negative tweet
+  output$negative_tweet <- renderTwitterwidget({
+    get_negative_tweet_widget(df_tweets())
   })
 }
