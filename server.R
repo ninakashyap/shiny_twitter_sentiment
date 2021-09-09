@@ -11,6 +11,7 @@ library(shiny)
 library(highcharter)
 library(twitterwidget)
 library(shinyjs)
+library(DT)
 
 # Helper functions --------------------------------------------------------
 source('utils/get_tweets.R')
@@ -93,5 +94,12 @@ server <- function(input, output) {
   # Most negative tweet
   output$negative_tweet <- renderTwitterwidget({
     get_negative_tweet_widget(df_tweets())
+  })
+  
+  # Density plot
+  
+  # Tweet table
+  output$tweet_table = renderDataTable({
+    get_tweet_wall_table(df_tweets())
   })
 }

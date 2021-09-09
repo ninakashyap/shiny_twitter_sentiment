@@ -15,15 +15,17 @@ library(shinyjs)
 library(shinydashboard)
 library(dashboardthemes)
 library(shinybusy)
+library(DT)
 
 # UI ----------------------------------------------------------------------
 
 ui <- dashboardPage(
 
   # Title 
-  dashboardHeader(title = uiOutput('text_header'),
-                  titleWidth = 500
-                  ),
+  dashboardHeader(
+    title = uiOutput('text_header'),
+    titleWidth = 500
+  ),
 
   # Sidebar 
   dashboardSidebar(
@@ -72,7 +74,10 @@ ui <- dashboardPage(
     ),
     
     # Loading spinner
-    add_busy_spinner(spin = "fingerprint", position = "bottom-right"),
+    add_busy_spinner(
+      spin = "fingerprint", 
+      position = "bottom-right"
+    ),
   
     # Tabs
     tabItems(
@@ -123,7 +128,7 @@ ui <- dashboardPage(
     # Tweet wall
     tabItem(
       tabName = "twitter_tab",
-      h2("Widgets tab content"),
+      #h2("Widgets tab content"),
 
       # Ouput functions
 
@@ -131,9 +136,12 @@ ui <- dashboardPage(
       fluidRow(
         column(4, twitterwidgetOutput('positive_tweet')),
         column(4, twitterwidgetOutput('negative_tweet'))
-      )
-
+      ),
+      
       # Browse tweets
+      fluidRow(
+        dataTableOutput('tweet_table')
+      )
       )
     )
   )

@@ -73,3 +73,17 @@ get_sentiment_df <- function(d) {
            positive = ifelse(sentiment == 0, 0, positive))
 }
 
+# Function to get tweet wall dataset  ---------------------------
+
+get_tweet_wall_table <- function(d) {
+  d_senti <- get_sentiment_df(d)
+  
+  d_senti %>% 
+    select(Time = created_at, 
+           Username = screen_name,
+           Tweet = text,
+           Retweets = retweet_count, 
+           Favorites = favorite_count,
+           `Polarity Score` = sentiment)
+}
+
