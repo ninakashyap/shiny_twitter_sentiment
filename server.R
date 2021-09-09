@@ -45,7 +45,7 @@ server <- function(input, output) {
         Sys.sleep(0.25)
       }
       })
-    get_tweets(input$search_term)
+    get_tweets(input$search_term, input$n_tweets)
     })
     
   # Refresh the `twitter_output` div
