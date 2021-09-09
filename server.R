@@ -97,6 +97,9 @@ server <- function(input, output) {
   })
   
   # Density plot
+  output$sentiment_density <- renderHighchart({
+    plot_sentiment_density(df_tweets())
+  })
   
   # Tweet table
   output$tweet_table = renderDataTable({

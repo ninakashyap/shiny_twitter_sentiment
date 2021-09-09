@@ -74,6 +74,7 @@ ui <- dashboardPage(
     ),
     
     # Loading spinner
+    add_busy_bar(),
     add_busy_spinner(
       spin = "fingerprint", 
       position = "bottom-right"
@@ -135,7 +136,8 @@ ui <- dashboardPage(
       # Top tweets
       fluidRow(
         column(4, twitterwidgetOutput('positive_tweet')),
-        column(4, twitterwidgetOutput('negative_tweet'))
+        column(4, twitterwidgetOutput('negative_tweet')),
+        column(4, highchartOutput('sentiment_density'))
       ),
       
       # Browse tweets
