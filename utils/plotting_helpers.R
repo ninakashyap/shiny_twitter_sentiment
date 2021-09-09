@@ -115,6 +115,23 @@ plot_sentiment_density <- function(df) {
 }
 
 
+# Trending plot  ----------------------------------------------------------
+
+get_trending_plot <- function(country) {
+  get_trends(country) %>% 
+    select(trend, tweet_volume) %>% 
+    filter(!is.na(tweet_volume)) %>% 
+    hchart('column',
+           color = '#1DBB9C',
+           hcaes(y = tweet_volume,x = trend),
+           name = 'Tweet Volume'
+    ) %>% 
+    hc_title(text = paste("Trending In ", country)) %>% 
+    hc_xAxis(title = list(text = "Topic")) %>% 
+    hc_yAxis(title = list(text = "Tweet Volume"))
+}
+
+
   
   
 
