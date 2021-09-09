@@ -6,17 +6,6 @@
 ###############################################################################
 
 
-# Libraries ---------------------------------------------------------------
-
-library(tidyverse)
-library(highcharter)
-
-
-# Helper functions  -------------------------------------------------------
-
-source('utils/data_helpers.R')
-
-
 # Function to plot top 10 most common words  -----------------------------------
 
 plot_top10_words <- function(df, search_word) {

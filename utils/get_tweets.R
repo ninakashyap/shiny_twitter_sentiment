@@ -6,14 +6,6 @@
 ###############################################################################
 
 
-# Libraries  --------------------------------------------------------------
-
-library(rtweet)
-library(tidyverse)
-
-
-# Functions ------------------------------------------------------------------
-
 get_tweets <- function(search_word, n_tweets) {
   # ONLY RETURNS DATA FROM THE PAST 6-9 DAYS
   search_tweets(q = search_word,

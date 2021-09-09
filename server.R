@@ -7,17 +7,17 @@
 
 # Libraries  -------------------------------------------------------------
 
-library(shiny)
-library(highcharter)
-library(twitterwidget)
-library(shinyjs)
-library(DT)
+# library(shiny)
+# library(highcharter)
+# library(twitterwidget)
+# library(shinyjs)
+# library(DT)
 
-# Helper functions --------------------------------------------------------
-source('utils/get_tweets.R')
-source('utils/plotting_helpers.R')
-source('utils/data_helpers.R')
-source('utils/twitter_widget_helpers.R')
+# # Helper functions --------------------------------------------------------
+# source('utils/get_tweets.R')
+# source('utils/plotting_helpers.R')
+# source('utils/data_helpers.R')
+# source('utils/twitter_widget_helpers.R')
 
 # Server ------------------------------------------------------------------
 

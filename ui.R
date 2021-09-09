@@ -5,20 +5,6 @@
 # Created 2021-08-30 20:39:17
 ###############################################################################
 
-
-# Libraries ---------------------------------------------------------------
-
-library(shiny)
-library(highcharter)
-library(twitterwidget)
-library(shinyjs)
-library(shinydashboard)
-library(dashboardthemes)
-library(shinybusy)
-library(DT)
-
-# UI ----------------------------------------------------------------------
-
 ui <- dashboardPage(
 
   # Title 

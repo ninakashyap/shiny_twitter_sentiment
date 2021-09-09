@@ -1,15 +1,9 @@
 ###############################################################################
-# Functions for data cleaning and retrieval 
+# Functions for data cleaning and wrangling 
 #
 # Author: Nina Kashyap
 # Created 2021-08-30 21:48:55
 ###############################################################################
-
-# Libraries  --------------------------------------------------------------
-
-library(tidyverse)
-library(tidytext)
-library(sentimentr)
 
 
 # Function to get word counts ------------------------------

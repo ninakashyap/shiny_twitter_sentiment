@@ -6,15 +6,6 @@
 ###############################################################################
 
 
-# Libraries ---------------------------------------------------------------
-
-library(twitterwidget)
-library(tidyverse)
-
-# Helper functions  -------------------------------------------------------
-
-source('utils/data_helpers.R')
-
 # Function to get most positive tweet -------------------------------------
 
 get_positive_tweet_widget <- function(df) {
