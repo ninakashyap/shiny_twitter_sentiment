@@ -81,3 +81,15 @@ get_tweet_wall_table <- function(d) {
            `Polarity Score` = sentiment)
 }
 
+
+# Numbers for sentiment summary boxes -------------------------------------
+
+get_sentiment_summary <- function(d, type) {
+  d_clean <- get_sentiment_df(d) 
+  
+  d_clean %>% 
+    count(positive) %>% 
+    filter(positive == type) %>% 
+    pull(n)
+} 
+
