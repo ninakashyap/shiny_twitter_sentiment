@@ -38,15 +38,7 @@ server <- function(input, output) {
   
   # Get data 
   
-  df_tweets <- eventReactive(input$submit_button, {
-    withProgress(message = 'Creating plot', style = 'notification', value = 0.1, {
-      for (i in 1:15) {
-        incProgress(1/15)
-        Sys.sleep(0.25)
-      }
-      })
-    get_tweets(input$search_term, input$n_tweets)
-    })
+  df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term, input$n_tweets) })
     
   # Refresh the `twitter_output` div
   observeEvent(df_tweets(), {

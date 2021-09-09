@@ -14,6 +14,7 @@ library(twitterwidget)
 library(shinyjs)
 library(shinydashboard)
 library(dashboardthemes)
+library(shinybusy)
 
 # UI ----------------------------------------------------------------------
 
@@ -69,24 +70,11 @@ ui <- dashboardPage(
     shinyDashboardThemes(
       theme = "poor_mans_flatly"
     ),
-
-    # # CSS
-    # tags$style(type="text/css", "
-    #            #loadmessage {
-    #            position: fixed;
-    #            top: 500px;
-    #            left: 0px;
-    #            width: 100%;
-    #            padding: 5px 0px 5px 0px;
-    #            text-align: center;
-    #            font-weight: bold;
-    #            font-size: 100%;
-    #            color: #000000;
-    #            background-color: #EF7579;
-    #            z-index: 105;
-    #            }
-    #            "),
+    
+    # Loading spinner
+    add_busy_spinner(spin = "fingerprint", position = "bottom-right"),
   
+    # Tabs
     tabItems(
       
       # Summary dashboard
@@ -119,11 +107,6 @@ ui <- dashboardPage(
             disabled(downloadButton('downloadData', 'Download Data'))
           )
         ),
-        
-        # # Loading panel
-        # conditionalPanel(condition = "$('html').hasClass('shiny-busy')",
-        #                  tags$div("Loading...", id = "loadmessage")
-        #                  ),
         
         # Output functions 
         fluidRow(
