@@ -88,15 +88,16 @@ plot_sentiment_pie <- function(df) {
   # Plot
   df_clean %>% 
     count(positive) %>% 
-    mutate(positive = ifelse(positive == 1,"Positive Tweets","Negative Tweets"))%>% 
+    mutate(positive_name = ifelse(positive == 1,"Positive Tweets","Negative Tweets"),
+           positive_name = ifelse(positive == 0,"Neutral Tweets", positive_name)) %>% 
     hchart("pie", 
-           hcaes(x = positive, y = n),
-           name = "Number Of Tweets") %>% 
-    hc_plotOptions(
-      pie = list(colors = c("#E5E5E5", 
-                            #"#DE1219", 
-                            '#5DA9DD'))
-    )
+           hcaes(x = positive_name, y = n),
+           name = "Number Of Tweets") #%>% 
+    # hc_plotOptions(
+    #   pie = list(colors = c("#E5E5E5",
+    #                         #"#DE1219",
+    #                         '#5DA9DD'))
+    # )
   
 }
 

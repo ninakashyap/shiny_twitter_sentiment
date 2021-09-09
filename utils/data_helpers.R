@@ -68,7 +68,8 @@ get_sentiment_df <- function(d) {
     group_by(element_id) %>% 
     summarise(sentiment = sum(sentimentxweight, na.rm = T)) %>% 
     cbind(d) %>% 
-    filter(sentiment != 0, !is.na(sentiment))  %>% 
-    mutate(positive = ifelse(sentiment > 0, 1, 0))
+    #filter(sentiment != 0, !is.na(sentiment))  %>% 
+    mutate(positive = ifelse(sentiment > 0, 1, -1),
+           positive = ifelse(sentiment == 0, 0, positive))
 }
 
