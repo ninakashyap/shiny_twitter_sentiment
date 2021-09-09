@@ -60,7 +60,6 @@ ui <- dashboardPage(
     ),
     
     # Loading spinner
-    add_busy_bar(),
     add_busy_spinner(
       spin = "fingerprint", 
       position = "bottom-right"
@@ -76,10 +75,21 @@ ui <- dashboardPage(
         wellPanel(
           fluidRow(
             # Search bar
-            textInput(inputId = 'search_term',
-                      label = 'Search tweets from the last 6-9 days:',
-                      placeholder = '#covid-19',
-                      width = '50%'
+            # textInput(inputId = 'search_term',
+            #           label = 'Search tweets from the last 6-9 days:',
+            #           placeholder = '#covid-19',
+            #           width = '50%'
+            # ),
+            selectizeInput(
+              inputId = 'search_term',
+              label = 'Search tweets from the last 6-9 days:',
+              choices = nz_trending_list,
+              multiple = F,
+              options = list(
+                placeholder = '#covid',
+                createOnBlur = T,
+                create = T
+                )
             ),
             # Number of tweets
             numericInput(

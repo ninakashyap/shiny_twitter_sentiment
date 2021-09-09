@@ -28,3 +28,9 @@ source('utils/get_tweets.R')
 source('utils/plotting_helpers.R')
 source('utils/data_helpers.R')
 source('utils/twitter_widget_helpers.R')
+
+
+# Variables ---------------------------------------------------------------
+
+nz_trending_list <- get_trends('New Zealand') %>% 
+  pull(trend) 
