@@ -22,7 +22,7 @@ plot_top10_words <- function(df, search_word) {
     ) %>% 
     hc_title(text = paste("Top 10 Words In Recent Tweets About ", str_to_title(search_word))) %>% 
     hc_xAxis(title = list(text = "Word")) %>% 
-    hc_yAxis(title = list(text = "Frequency")) 
+    hc_yAxis(title = list(text = "Tweet Volume")) 
   
 }
 
@@ -39,7 +39,7 @@ plot_top_words_wordcloud <- function(df, search_word) {
     head(50) %>% 
     hchart("wordcloud", 
            hcaes(name = word, weight = log(n)),
-           name = 'Log Frequency') %>% 
+           name = 'Log Tweet Volume') %>% 
     hc_title(text = paste("Top Words In Recent Tweets About ", str_to_title(search_word)))
   
 }
@@ -61,7 +61,7 @@ plot_top5_hashtags <- function(df, search_word) {
     ) %>% 
     hc_title(text = paste("Top 5 Hashtags In Recent Tweets About ", str_to_title(search_word))) %>% 
     hc_xAxis(title = list(text = "Hashtag")) %>% 
-    hc_yAxis(title = list(text = "Frequency")) %>% 
+    hc_yAxis(title = list(text = "Tweet Volume")) %>% 
     hc_colors(c('#5DA9DD'))
   
 }
@@ -81,7 +81,7 @@ plot_sentiment_pie <- function(df) {
            positive_name = ifelse(positive == 0,"Neutral Tweets", positive_name)) %>% 
     hchart("pie", 
            hcaes(x = positive_name, y = n),
-           name = "Number Of Tweets") #%>% 
+           name = "Tweet Volume") #%>% 
     # hc_plotOptions(
     #   pie = list(colors = c("#E5E5E5",
     #                         #"#DE1219",
