@@ -102,6 +102,29 @@ plot_sentiment_pie <- function(df) {
 }
 
 
+# Function to generate sentiment density plot -----------------------------
+
+plot_sentiment_density <- function(df) {
+  # Get dataset in correct form
+  df_clean <- get_sentiment_df(df) %>% 
+    pull(sentiment)
+  
+  # Plot
+  hchart(density(df_clean), 
+         type = "area", 
+         #color = "#B71C1C", 
+         name = "Density")  %>% 
+    hc_title(text = "Distribution Of Sentiment In Tweets") %>% 
+    hc_xAxis(title = list(text = "Polarity Score"),
+             plotLines = list(
+               list(value = 0, 
+                    color = "red", 
+                    width = 1,
+                    dashStyle = "shortdash")
+             )) 
+  
+}
+
 
   
   
