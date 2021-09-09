@@ -75,14 +75,10 @@ ui <- dashboardPage(
         wellPanel(
           fluidRow(
             # Search bar
-            # textInput(inputId = 'search_term',
-            #           label = 'Search tweets from the last 6-9 days:',
-            #           placeholder = '#covid-19',
-            #           width = '50%'
-            # ),
             selectizeInput(
               inputId = 'search_term',
               label = 'Search tweets from the last 6-9 days:',
+              selected = '',
               choices = nz_trending_list,
               multiple = F,
               options = list(
@@ -106,7 +102,48 @@ ui <- dashboardPage(
                          label = 'Submit'
             ),
             # Downlaod button
-            disabled(downloadButton('downloadData', 'Download Data'))
+            disabled(downloadButton('downloadData', 'Download Raw Data'))
+          )
+        ),
+        
+        # Display if page is empty 
+        conditionalPanel(
+          # If no input
+          condition = "input.submit_button == 0",
+          
+          # Show trending stats
+         fluidRow(
+          summaryBox2(
+            "Top Trend NZ",
+            get_top_trend("New Zealand"), 
+            width = 3, 
+            icon = "fas fa-kiwi-bird", 
+            style = "info"
+            ),
+          summaryBox2(
+            "Top Trend Worldwide", 
+            get_top_trend("Worldwide"), 
+            width = 3, 
+            icon = "fas fa-globe-asia", 
+            style = "success"
+            ),
+          summaryBox2(
+            "Top Trend USA", 
+            get_top_trend("United States"), 
+            width = 3, 
+            icon = "fas fa-flag-usa", 
+            style = "danger"
+            ),
+          summaryBox2(
+            "Top Trend UK", 
+            get_top_trend("United Kingdom"), 
+            width = 3, 
+            icon = "fas fa-comments", 
+            style = "light")
+          ),
+         # NZ trending plot
+          fluidRow(
+            highchartOutput('trending_plot')
           )
         ),
         

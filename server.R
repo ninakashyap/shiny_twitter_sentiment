@@ -5,21 +5,6 @@
 # Created 2021-08-30 20:38:28
 ###############################################################################
 
-# Libraries  -------------------------------------------------------------
-
-# library(shiny)
-# library(highcharter)
-# library(twitterwidget)
-# library(shinyjs)
-# library(DT)
-
-# # Helper functions --------------------------------------------------------
-# source('utils/get_tweets.R')
-# source('utils/plotting_helpers.R')
-# source('utils/data_helpers.R')
-# source('utils/twitter_widget_helpers.R')
-
-# Server ------------------------------------------------------------------
 
 server <- function(input, output) {
   
@@ -104,5 +89,10 @@ server <- function(input, output) {
   # Tweet table
   output$tweet_table = renderDataTable({
     get_tweet_wall_table(df_tweets())
+  })
+  
+  # Initial plot 
+  output$trending_plot = renderHighchart({
+    get_trending_plot('New Zealand')
   })
 }
