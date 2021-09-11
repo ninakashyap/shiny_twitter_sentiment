@@ -17,8 +17,8 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Summary Dashboard", tabName = "summary_tab", icon = icon("chart-bar")),
-      menuItem("Search Inspiration", tabName = "trending_tab", icon = icon("globe-asia")),
-      menuItem("Tweet Wall", tabName = "twitter_tab", icon = icon("twitter"))
+      menuItem("Tweet Wall", tabName = "twitter_tab", icon = icon("twitter")),
+      menuItem("Search Inspiration", tabName = "trending_tab", icon = icon("globe-asia"))
     )
   ),
   
