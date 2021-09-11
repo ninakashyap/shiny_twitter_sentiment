@@ -16,7 +16,7 @@ get_positive_tweet_widget <- function(df) {
     head(1) %>% 
     pull(status_id)
   
-  twitterwidget(tweet_id)
+  twitterwidget(tweet_id, width='350px', height = '400px')
 }
 
 # Function to get top tweet -------------------------------------
@@ -42,5 +42,5 @@ get_negative_tweet_widget <- function(df) {
     head(1) %>% 
     pull(status_id)
   
-  twitterwidget(tweet_id)
+  twitterwidget(tweet_id, width='350px', height = '400px')
 }

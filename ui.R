@@ -138,7 +138,14 @@ ui <- dashboardPage(
     # Tweet wall
     tabItem(
       tabName = "twitter_tab",
-      #h2("Widgets tab content"),
+      
+      # Display if page is empty 
+      conditionalPanel(
+        # If no input
+        condition="input.search_term == ''",
+        # Ask for input
+        h1("Enter a search term on the Summary Dashboard to populate the tweet wall")
+      ),
 
       # Ouput functions
       
@@ -147,8 +154,8 @@ ui <- dashboardPage(
 
       # Top tweets
       fluidRow(
-        column(4, twitterwidgetOutput('positive_tweet')),
-        column(4, twitterwidgetOutput('negative_tweet')),
+        column(4, twitterwidgetOutput('positive_tweet', width='350px', height = '400px')),
+        column(4, twitterwidgetOutput('negative_tweet', width='350px', height = '400px')),
         column(4, highchartOutput('sentiment_density'))
       ),
       
