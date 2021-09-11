@@ -16,10 +16,7 @@ server <- function(input, output) {
   })
   
   output$text_header <- renderText({
-    # h3(
       paste('How The World Feels About', rv(), 'Right Now')
-      # ,align = 'center'
-      #  )
   })
   
   # Check if input is valid
@@ -28,7 +25,6 @@ server <- function(input, output) {
   iv$enable()
   
   # Get data 
-  
   df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term, input$n_tweets) })
     
   # Refresh the `twitter_output` div
@@ -38,17 +34,29 @@ server <- function(input, output) {
     shinyjs::js$refresh2()
   })
   
-  # Downloadable csv of selected dataset 
+  # Enable download buttons
   observeEvent(input$submit_button, {
-    enable('downloadData')
+    enable('download_raw_data')
+    enable('download_sentiment_data')
   })
   
-  output$downloadData <- downloadHandler(
+  # Downloadable csv of raw dataset 
+  output$download_raw_data <- downloadHandler(
     filename = function() {
       paste(isolate(input$search_term), '.csv', sep = '')
     },
     content = function(file) {
       write_csv(df_tweets(), file)
+    }
+  )
+  
+  # Downloadable csv of sentiment dataset 
+  output$download_sentiment_data <- downloadHandler(
+    filename = function() {
+      paste(isolate(input$search_term), '_sentiment', '.csv', sep = '')
+    },
+    content = function(file) {
+      write_csv(get_tweet_wall_table(df_tweets()), file)
     }
   )
   

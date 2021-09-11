@@ -108,7 +108,7 @@ ui <- dashboardPage(
                          label = 'Submit'
             ),
             # Downlaod button
-            disabled(downloadButton('downloadData', 'Download Raw Data'))
+            disabled(downloadButton('download_raw_data', 'Download Raw Data'))
           )
         ),
         
@@ -189,6 +189,15 @@ ui <- dashboardPage(
       # Browse tweets
       fluidRow(
         dataTableOutput('tweet_table')
+      ),
+      
+      # Downlaod button
+      fluidRow(
+        column(
+          1,
+          disabled(downloadButton('download_sentiment_data', 'Download Data')),
+          offset = 10
+        )
       )
       )
     )
