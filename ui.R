@@ -77,6 +77,7 @@ ui <- dashboardPage(
       # Summary dashboard
       tabItem(
         tabName = "summary_tab",
+
         # Input functions
         wellPanel(
           fluidRow(

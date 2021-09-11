@@ -22,6 +22,8 @@ get_tweets <- function(search_word, n_tweets) {
 
 get_top_trend <- function(country) {
   get_trends(country) %>% 
+    mutate(len = nchar(trend)) %>% 
+    filter(len <= 20) %>% 
     filter(tweet_volume == max(tweet_volume, na.rm = T)) %>%
     head(1) %>% 
     pull(trend)

@@ -48,7 +48,7 @@ get_sentiment_summarybox <- function(df) {
 get_trending_summary <- function() {
   fluidRow(
     summaryBox2(
-      "Top Trend Worldwide", 
+      "Top Trend Worldwide",
       get_top_trend("Worldwide"), 
       width = 3, 
       icon = "fas fa-globe-asia", 
