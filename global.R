@@ -11,6 +11,7 @@
 library(shiny)
 library(shinyjs)
 library(shinydashboard)
+library(shinyvalidate)
 library(dashboardthemes)
 library(shinybusy)
 library(rtweet)
