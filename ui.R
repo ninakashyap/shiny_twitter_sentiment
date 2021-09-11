@@ -112,35 +112,11 @@ ui <- dashboardPage(
           condition = "input.submit_button == 0",
           
           # Show trending stats
-         fluidRow(
-          summaryBox2(
-            "Top Trend NZ",
-            get_top_trend("New Zealand"), 
-            width = 3, 
-            icon = "fas fa-kiwi-bird", 
-            style = "info"
-            ),
-          summaryBox2(
-            "Top Trend Worldwide", 
-            get_top_trend("Worldwide"), 
-            width = 3, 
-            icon = "fas fa-globe-asia", 
-            style = "success"
-            ),
-          summaryBox2(
-            "Top Trend USA", 
-            get_top_trend("United States"), 
-            width = 3, 
-            icon = "fas fa-flag-usa", 
-            style = "danger"
-            ),
-          summaryBox2(
-            "Top Trend UK", 
-            get_top_trend("United Kingdom"), 
-            width = 3, 
-            icon = "fas fa-comments", 
-            style = "light")
-          ),
+         # fluidRow(
+         #   h3("Search Inspiration:")
+         # ),
+         uiOutput("summarybox_trending"),
+         
          # NZ trending plot
           fluidRow(
             highchartOutput('trending_plot')
@@ -165,6 +141,9 @@ ui <- dashboardPage(
       #h2("Widgets tab content"),
 
       # Ouput functions
+      
+      # Summary boxes
+      uiOutput("summarybox_sentiment"),
 
       # Top tweets
       fluidRow(
