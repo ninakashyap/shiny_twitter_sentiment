@@ -29,6 +29,7 @@ source('utils/rtweet_helpers.R')
 source('utils/plotting_helpers.R')
 source('utils/data_helpers.R')
 source('utils/twitter_widget_helpers.R')
+source('utils/summarybox_helpers.R')
 
 
 # Variables ---------------------------------------------------------------
