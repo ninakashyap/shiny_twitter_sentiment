@@ -82,7 +82,7 @@ get_tweet_wall_table <- function(d) {
 }
 
 
-# Numbers for sentiment summary boxes -------------------------------------
+# Function to get numbers for sentiment summary boxes -------------------------------------
 
 get_sentiment_summary <- function(d, type) {
   d_clean <- get_sentiment_df(d) 
@@ -93,3 +93,12 @@ get_sentiment_summary <- function(d, type) {
     pull(n)
 } 
 
+
+
+# Function to get woeid from location name --------------------------------
+
+get_woeid <- function(selected_location) {
+  d_locations %>% 
+    filter(location == selected_location) %>% 
+    pull(woeid)
+}

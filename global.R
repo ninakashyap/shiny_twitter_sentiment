@@ -34,9 +34,16 @@ source('utils/summarybox_helpers.R')
 
 # Variables ---------------------------------------------------------------
 
+# Topic search bar suggestions
 d_nz_trending <- get_trends('New Zealand')
-
 nz_trending_list <- c(d_nz_trending[,'trend'], '')
+
+# Country search bar suggestions
+countries_list <- trends_available() %>% 
+  filter(country != "") %>% 
+  pull(country) %>% 
+  unique()
+countries_list <- c('Worldwide',countries_list)
 
 
 

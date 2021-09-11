@@ -17,6 +17,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Summary Dashboard", tabName = "summary_tab", icon = icon("chart-bar")),
+      menuItem("Search Inspiration", tabName = "trending_tab", icon = icon("globe-asia")),
       menuItem("Tweet Wall", tabName = "twitter_tab", icon = icon("twitter"))
     )
   ),
@@ -125,7 +126,7 @@ ui <- dashboardPage(
         
         # Output functions 
         fluidRow(
-          column(6, highchartOutput('hashtags')),
+          column(6, box(highchartOutput('hashtags'))),
           column(6, highchartOutput('wordcloud'))
           ),
       
@@ -134,6 +135,27 @@ ui <- dashboardPage(
           column(6, twitterwidgetOutput('top_tweet', width = "100%", height = "400px"))
           )
       ),
+      
+    # Trending tab
+    tabItem(
+      tabName = 'trending_tab',
+      
+      # Summary boxes
+      uiOutput("summarybox_trending_tab"),
+      
+      # Pick a location
+      selectInput(
+        inputId = "location", 
+        label = "Explore Popular Topics In:",
+        selected = "Worldwide",
+        choices = countries_list
+        ),
+      
+      # Trending plot
+      fluidRow(
+        highchartOutput('trending_tab_plot')
+      )
+    ),
       
     # Tweet wall
     tabItem(

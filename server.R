@@ -98,7 +98,7 @@ server <- function(input, output) {
   
   # Trending tab
   
-  # Sentiment summary boxes 
+  # Trending summary boxes 
   output$summarybox_trending <- renderUI({
     get_trending_summary()
   })
@@ -106,5 +106,15 @@ server <- function(input, output) {
   # Inital trending plot 
   output$trending_plot = renderHighchart({
     get_trending_plot('New Zealand')
+  })
+  
+  # Trending summary boxes 
+  output$summarybox_trending_tab <- renderUI({
+    get_trending_summary()
+  })
+  
+  # Location trending plot 
+  output$trending_tab_plot = renderHighchart({
+    get_trending_plot(input$location)
   })
 }
