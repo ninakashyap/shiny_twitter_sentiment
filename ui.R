@@ -26,6 +26,11 @@ ui <- dashboardPage(
   dashboardBody(
     useShinyjs(),
     
+    tags$style(HTML(".box.box-solid.box-primary>.box-header {}
+                    .box.box-solid.box-primary{background:#FFFFFF}"
+                    )
+               ),
+    
     # Refresh 3 tweet widgets
     extendShinyjs(
       text = "shinyjs.refresh = function() {
@@ -93,7 +98,7 @@ ui <- dashboardPage(
               inputId = 'n_tweets',
               label = 'Number of tweets (up to 15,000)',
               value = 1000,
-              min = 1,
+              min = 50,
               max = 10000,
               width = '20%'
             )),
@@ -126,13 +131,13 @@ ui <- dashboardPage(
         
         # Output functions 
         fluidRow(
-          column(6, box(highchartOutput('hashtags'))),
-          column(6, highchartOutput('wordcloud'))
+          uiOutput("hashtags_box"),
+          uiOutput("wordcloud_box")
           ),
       
         fluidRow(
-          column(6, highchartOutput('piechart')),
-          column(6, twitterwidgetOutput('top_tweet', width = "100%", height = "400px"))
+          uiOutput("piechart_box"),
+          uiOutput("top_tweet_box")
           )
       ),
       

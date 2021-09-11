@@ -39,8 +39,7 @@ plot_top_words_wordcloud <- function(df, search_word) {
     head(50) %>% 
     hchart("wordcloud", 
            hcaes(name = word, weight = log(n)),
-           name = 'Log Tweet Volume') %>% 
-    hc_title(text = paste("Top Words In Recent Tweets About ", str_to_title(search_word)))
+           name = 'Log Tweet Volume')
   
 }
 
@@ -59,7 +58,6 @@ plot_top5_hashtags <- function(df, search_word) {
            hcaes(x = hashtags, y = n),
            name = 'Frequency'
     ) %>% 
-    hc_title(text = paste("Top 5 Hashtags In Recent Tweets About ", str_to_title(search_word))) %>% 
     hc_xAxis(title = list(text = "Hashtag")) %>% 
     hc_yAxis(title = list(text = "Tweet Volume")) %>% 
     hc_colors(c('#5DA9DD'))

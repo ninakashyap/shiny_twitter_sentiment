@@ -54,19 +54,84 @@ server <- function(input, output) {
     plot_top_words_wordcloud(df_tweets(), isolate(input$search_term))
   })
   
+  output$wordcloud_box <- renderUI({
+    
+    if (is.null(df_tweets())) {
+      return()
+    }
+    
+    box(
+      title = paste("Top Words In Recent Tweets About ", str_to_title(isolate(input$search_term))), 
+      status = "primary", 
+      solidHeader = TRUE,
+      collapsible = TRUE, 
+      highchartOutput('wordcloud')
+    )
+    
+  })
+  
+  
   # Top hashtags plot
   output$hashtags <- renderHighchart({
     plot_top5_hashtags(df_tweets(), isolate(input$search_term))
    })
+  
+  output$hashtags_box <- renderUI({
+    
+    if (is.null(df_tweets())) {
+      return()
+    }
+    
+    box(
+      title = paste("Top 5 Hashtags In Recent Tweets About ", str_to_title(isolate(input$search_term))), 
+      status = "primary", 
+      solidHeader = TRUE,
+      collapsible = TRUE, 
+      highchartOutput('hashtags')
+    )
+    
+  })
   
   # Top tweet
   output$top_tweet <- renderTwitterwidget({
     get_top_tweet_widget(df_tweets())
   })
   
+  output$top_tweet_box <- renderUI({
+    
+    if (is.null(df_tweets())) {
+      return()
+    }
+    
+    box(
+      title = paste("Most Populat Tweet About ", str_to_title(isolate(input$search_term))),
+      status = "primary", 
+      solidHeader = TRUE,
+      collapsible = TRUE, 
+      twitterwidgetOutput('top_tweet', width = "100%", height = "400px")
+    )
+    
+  })
+  
   # Sentiment pie chart 
   output$piechart <- renderHighchart({
     plot_sentiment_pie(df_tweets())
+  })
+  
+  output$piechart_box <- renderUI({
+    
+    if (is.null(df_tweets())) {
+      return()
+    }
+    
+    box(
+      title = "Number Of Postive, Negative And Neutral Tweets", 
+      status = "primary", 
+      solidHeader = TRUE,
+      collapsible = TRUE, 
+      highchartOutput('piechart')
+    )
+    
   })
   
   # Twitter Tab
