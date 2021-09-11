@@ -71,32 +71,9 @@ server <- function(input, output) {
   
   # Twitter Tab
   
-  # Summary boxes
-  output$summarybox <- renderUI({
-    fluidRow(
-      summaryBox2('Total Tweets Collected', "$40,000", width = 3, icon = "fas fa-wave-square", style = "info"),
-      summaryBox2(
-        'Total Postive Tweets', 
-        get_sentiment_summary(df_tweets(), 1),
-        width = 3, 
-        icon = "fas fa-smile-beam",
-        style = "success"
-        ),
-      summaryBox2(
-        'Total Negative Tweets', 
-        get_sentiment_summary(df_tweets(), -1),
-        width = 3, 
-        icon = "fas fa-sad-tear", 
-        style = "danger"
-        ),
-      summaryBox2(
-        'Total Neutral Tweets', 
-        get_sentiment_summary(df_tweets(), 0),
-        width = 3, 
-        icon = "fas fa-meh-blank", 
-        style = "primary"
-        )
-    )
+  # Sentiment summary boxes 
+  output$summarybox_sentiment <- renderUI({
+    get_sentiment_summarybox(df_tweets())
   })
   
   # Most postitive tweet
@@ -119,7 +96,14 @@ server <- function(input, output) {
     get_tweet_wall_table(df_tweets())
   })
   
-  # Initial plot 
+  # Trending tab
+  
+  # Sentiment summary boxes 
+  output$summarybox_trending <- renderUI({
+    get_trending_summary()
+  })
+  
+  # Inital trending plot 
   output$trending_plot = renderHighchart({
     get_trending_plot('New Zealand')
   })
