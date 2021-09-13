@@ -6,8 +6,11 @@
 ###############################################################################
 
 ui <- dashboardPage(
+  
+  # Browser title
+  title = 'Twitter Sentiment Analysis',
 
-  # Title 
+  # Dashboard title  
   dashboardHeader(
     title = uiOutput('text_header'),
     titleWidth = 500
@@ -198,7 +201,7 @@ ui <- dashboardPage(
         # If no input
         condition="input.submit_button == 0",
         # Ask for input
-        h1("Enter a search term on the Summary Dashboard to populate the tweet wall")
+        h3("Enter a search term on the Summary Dashboard to populate the tweet wall")
       ),
 
       # Ouput functions
