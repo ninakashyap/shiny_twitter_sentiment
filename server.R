@@ -25,7 +25,43 @@ server <- function(input, output) {
   iv_n_tweets$enable()
   
   # Get data 
-  df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term, input$n_tweets) })
+  df_tweets <- eventReactive(input$submit_button, {
+    # Check not an empty search term
+    validate(
+      need(
+        input$search_term != "", 
+        paste(
+          "Please enter a search term ",
+          ji("search"))
+        )
+    )
+    
+    d <- get_tweets(input$search_term, input$n_tweets) 
+    
+    # Check not empty dataset
+    validate(
+      need(
+        nrow(d) != 0, 
+        paste(
+          "No results available ",
+          ji("shrug"))
+      )
+    )
+    
+    d
+    })
+  # 
+  # df_tweets <- eventReactive(df_tweets(), {
+  #   validate(
+  #     need(
+  #       nrow(df_tweets()) != 0, 
+  #       paste(
+  #         "No results available ",
+  #         ji("shrug"))
+  #     )
+  #   )
+  #   df_tweets()
+  # })
     
   # Refresh the `twitter_output` div
   observeEvent(df_tweets(), {
@@ -35,7 +71,7 @@ server <- function(input, output) {
   })
   
   # Enable download buttons
-  observeEvent(input$submit_button, {
+  observeEvent(df_tweets(), {
     enable('download_raw_data')
     enable('download_sentiment_data')
   })
@@ -67,43 +103,10 @@ server <- function(input, output) {
     plot_top_words_wordcloud(df_tweets(), isolate(input$search_term))
   })
   
-  output$wordcloud_box <- renderUI({
-    
-    if (is.null(df_tweets())) {
-      return()
-    }
-    
-    box(
-      title = paste("Top Words In Recent Tweets About ", str_to_title(isolate(input$search_term))), 
-      status = "primary", 
-      solidHeader = TRUE,
-      collapsible = TRUE, 
-      highchartOutput('wordcloud')
-    )
-    
-  })
-  
-  
   # Top hashtags plot
   output$hashtags <- renderHighchart({
     plot_top5_hashtags(df_tweets(), isolate(input$search_term))
    })
-  
-  output$hashtags_box <- renderUI({
-    
-    if (is.null(df_tweets())) {
-      return()
-    }
-    
-    box(
-      title = paste("Top 5 Hashtags In Recent Tweets About ", str_to_title(isolate(input$search_term))), 
-      status = "primary", 
-      solidHeader = TRUE,
-      collapsible = TRUE, 
-      highchartOutput('hashtags')
-    )
-    
-  })
   
   # Top tweet
   output$top_tweet <- renderTwitterwidget({
@@ -113,22 +116,6 @@ server <- function(input, output) {
   # Sentiment pie chart 
   output$piechart <- renderHighchart({
     plot_sentiment_pie(df_tweets())
-  })
-  
-  output$piechart_box <- renderUI({
-    
-    if (is.null(df_tweets())) {
-      return()
-    }
-    
-    box(
-      title = "Number Of Postive, Negative And Neutral Tweets", 
-      status = "primary", 
-      solidHeader = TRUE,
-      collapsible = TRUE, 
-      highchartOutput('piechart')
-    )
-    
   })
   
   # Twitter Tab
@@ -177,6 +164,17 @@ server <- function(input, output) {
   
   # Location trending plot 
   output$trending_tab_plot = renderHighchart({
+    validate(
+      need(
+        try(get_trending_plot(input$location)), 
+        paste(
+          "  Currently Unavailable ",
+          ji("sad"),
+          " Please choose another location! ",
+          ji("earth")
+          )
+        )
+    )
     get_trending_plot(input$location)
   })
 }
