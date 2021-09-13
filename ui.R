@@ -124,6 +124,11 @@ ui <- dashboardPage(
          # ),
          uiOutput("summarybox_trending"),
          
+         # Padding
+         fluidRow(
+           column(width = 6, offset = 0, style='padding:10px;')
+         ),
+         
          # NZ trending plot
           fluidRow(
             highchartOutput('trending_plot')
@@ -165,6 +170,11 @@ ui <- dashboardPage(
       # Summary boxes
       uiOutput("summarybox_trending_tab"),
       
+      # Padding
+      fluidRow(
+        column(width = 6, offset = 0, style='padding:10px;')
+      ),
+      
       # Pick a location
       selectInput(
         inputId = "location", 
@@ -186,7 +196,7 @@ ui <- dashboardPage(
       # Display if page is empty 
       conditionalPanel(
         # If no input
-        condition="input.search_term == ''",
+        condition="input.submit_button == 0",
         # Ask for input
         h1("Enter a search term on the Summary Dashboard to populate the tweet wall")
       ),
@@ -195,6 +205,11 @@ ui <- dashboardPage(
       
       # Summary boxes
       uiOutput("summarybox_sentiment"),
+      
+      # Padding
+      fluidRow(
+        column(width = 6, offset = 0, style='padding:10px;')
+      ),
 
       # Top tweets
       conditionalPanel(
@@ -238,10 +253,21 @@ ui <- dashboardPage(
         )
       ),
       
+      # Padding
+      fluidRow(
+        column(width = 6, offset = 0, style='padding:10px;')
+      ),
+      
       # Browse tweets
       fluidRow(
         dataTableOutput('tweet_table')
       ),
+      
+      # Padding
+      fluidRow(
+        column(width = 6, offset = 0, style='padding:10px;')
+      ),
+      
       
       # Downlaod button
       fluidRow(
