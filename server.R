@@ -20,9 +20,9 @@ server <- function(input, output) {
   })
   
   # Check if input is valid
-  iv <- InputValidator$new()
-  iv$add_rule("n_tweets", sv_between(100, 10000))
-  iv$enable()
+  iv_n_tweets <- InputValidator$new()
+  iv_n_tweets$add_rule("n_tweets", sv_between(100, 10000))
+  iv_n_tweets$enable()
   
   # Get data 
   df_tweets <- eventReactive(input$submit_button, {get_tweets(input$search_term, input$n_tweets) })
@@ -108,22 +108,6 @@ server <- function(input, output) {
   # Top tweet
   output$top_tweet <- renderTwitterwidget({
     get_top_tweet_widget(df_tweets())
-  })
-  
-  output$top_tweet_box <- renderUI({
-    
-    if (is.null(df_tweets())) {
-      return()
-    }
-    
-    box(
-      title = paste("Most Populat Tweet About ", str_to_title(isolate(input$search_term))),
-      status = "primary", 
-      solidHeader = TRUE,
-      collapsible = TRUE, 
-      twitterwidgetOutput('top_tweet', width = "100%", height = "400px")
-    )
-    
   })
   
   # Sentiment pie chart 

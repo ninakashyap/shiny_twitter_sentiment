@@ -37,7 +37,7 @@ source('utils/summarybox_helpers.R')
 
 # Topic search bar suggestions
 d_nz_trending <- get_trends('New Zealand')
-nz_trending_list <- c(d_nz_trending[,'trend'], '')
+nz_trending_list <- c(d_nz_trending[,'trend'], '#covid')
 
 # Country search bar suggestions
 countries_list <- trends_available() %>% 

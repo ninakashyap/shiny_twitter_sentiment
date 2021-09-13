@@ -85,7 +85,7 @@ ui <- dashboardPage(
             selectizeInput(
               inputId = 'search_term',
               label = 'Search tweets from the last 6-9 days:',
-              selected = '',
+              selected = '#covid',
               choices = nz_trending_list,
               multiple = F,
               options = list(
@@ -130,16 +130,32 @@ ui <- dashboardPage(
           )
         ),
         
-        # Output functions 
-        fluidRow(
-          uiOutput("hashtags_box"),
-          uiOutput("wordcloud_box")
-          ),
-      
-        fluidRow(
-          uiOutput("piechart_box"),
-          uiOutput("top_tweet_box")
+        # Display after submit 
+        conditionalPanel(
+          # If submit button has been pressed
+          condition = "input.submit_button != 0",
+          
+          # Plots
+          fluidRow(
+            uiOutput("hashtags_box"),
+            uiOutput("wordcloud_box")
+            ),
+        
+          fluidRow(
+            uiOutput("piechart_box"),
+            box(
+              title = "Most Popular Tweet",
+              status = "primary", 
+              solidHeader = TRUE,
+              collapsible = TRUE, 
+              # Scroll box
+              div(
+                  style='width:600px;overflow-x: scroll;height:400px;overflow-y: scroll;',
+                  twitterwidgetOutput('top_tweet', width = "100%", height = "400px")
+              )
+            )
           )
+        )
       ),
       
     # Trending tab
@@ -181,10 +197,45 @@ ui <- dashboardPage(
       uiOutput("summarybox_sentiment"),
 
       # Top tweets
-      fluidRow(
-        column(4, twitterwidgetOutput('positive_tweet', width='350px', height = '400px')),
-        column(4, twitterwidgetOutput('negative_tweet', width='350px', height = '400px')),
-        column(4, highchartOutput('sentiment_density'))
+      conditionalPanel(
+        # If submit button has been pressed
+        condition = "input.submit_button != 0",
+        
+        # Display tweets
+        fluidRow(
+          box(
+            title = "Most Positive Tweet",
+            status = "primary", 
+            solidHeader = TRUE,
+            collapsible = TRUE, 
+            width = 4,
+            # Scroll box
+            div(
+              style='width:350px;overflow-x: scroll;height:400px;overflow-y: scroll;',
+              twitterwidgetOutput('positive_tweet', width = '350px')
+            )
+          ),
+          box(
+            title = "Most Negative Tweet",
+            status = "primary", 
+            solidHeader = TRUE,
+            collapsible = TRUE, 
+            width = 4,
+            # Scroll box
+            div(
+              style='width:350px;overflow-x: scroll;height:400px;overflow-y: scroll;',
+              twitterwidgetOutput('negative_tweet', width = '350px')
+            )
+          ),
+          box(
+            title = "Distribution Of Sentiment In Tweets",
+            status = "primary", 
+            solidHeader = TRUE,
+            collapsible = TRUE, 
+            width = 4,
+            highchartOutput('sentiment_density')
+          )
+        )
       ),
       
       # Browse tweets
