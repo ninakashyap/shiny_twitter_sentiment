@@ -24,6 +24,22 @@ library(highcharter)
 library(summaryBox)
 
 
+# Token -------------------------------------------------------------------
+
+source('credentials.R')
+
+token <- create_token(
+  app = "shiny_twitter_sentiment",
+  API_KEY,
+  API_KEY_SECRET,
+  access_token = ACCESS_TOKEN,
+  access_secret = ACCESS_TOKEN_SECRET,
+  set_renv = TRUE
+)
+
+token <- get_tokens()
+
+
 # Helper functions --------------------------------------------------------
 
 source('utils/rtweet_helpers.R')
