@@ -22,6 +22,7 @@ library(tidyverse)
 library(DT)
 library(highcharter)
 library(summaryBox)
+library(emo)
 
 
 # Token -------------------------------------------------------------------

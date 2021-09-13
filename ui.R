@@ -145,12 +145,30 @@ ui <- dashboardPage(
           
           # Plots
           fluidRow(
-            uiOutput("hashtags_box"),
-            uiOutput("wordcloud_box")
+            box(
+              title = "Top Words", 
+              status = "primary", 
+              solidHeader = TRUE,
+              collapsible = TRUE, 
+              highchartOutput('wordcloud')
             ),
+            box(
+              title = "Top 5 Hashtags", 
+              status = "primary", 
+              solidHeader = TRUE,
+              collapsible = TRUE, 
+              highchartOutput('hashtags')
+            )
+          ),
         
           fluidRow(
-            uiOutput("piechart_box"),
+            box(
+              title = "Number Of Postive, Negative And Neutral Tweets", 
+              status = "primary", 
+              solidHeader = TRUE,
+              collapsible = TRUE, 
+              highchartOutput('piechart')
+            ),
             box(
               title = "Most Popular Tweet",
               status = "primary", 
