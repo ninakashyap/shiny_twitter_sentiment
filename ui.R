@@ -112,7 +112,7 @@ ui <- dashboardPage(
             selectizeInput(
               inputId = 'search_term',
               label = 'Search tweets from the last 6-9 days:',
-              selected = '#covid',
+              selected = '',
               choices = nz_trending_list,
               multiple = F,
               options = list(
