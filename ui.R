@@ -125,7 +125,7 @@ ui <- dashboardPage(
             numericInput(
               inputId = 'n_tweets',
               label = 'Number of tweets (up to 10,000)',
-              value = 1000,
+              value = 100,
               min = 100,
               max = 10000,
               width = '20%'
