@@ -16,7 +16,7 @@ ui <- dashboardPage(
     titleWidth = 500
   ),
 
-  # Sidebar 
+  # Sidebar tabs
   dashboardSidebar(
     sidebarMenu(
       menuItem("Summary Dashboard", tabName = "summary_tab", icon = icon("chart-bar")),
@@ -29,10 +29,28 @@ ui <- dashboardPage(
   dashboardBody(
     useShinyjs(),
     
-    tags$style(HTML(".box.box-solid.box-primary>.box-header {}
-                    .box.box-solid.box-primary{background:#FFFFFF}"
-                    )
-               ),
+    # Make box backgrounds whitw
+    tags$style(
+            HTML(
+                  ".box.box-solid.box-primary>.box-header {}
+                  .box.box-solid.box-primary{background:#FFFFFF}"
+            )
+    ),
+    
+    # Fade screen when loading
+    tags$body(tags$style(type="text/css", "
+             #loading  {
+                        content: '';
+                        position: fixed;
+                        height: 100%;
+                        width: 100%;
+                        left: 0;
+                        top: 0;
+                        z-index: 2;
+                        background: rgba(255, 255, 255, 0.5);  
+                         }
+                         ")
+    ),
     
     # Refresh 3 tweet widgets
     extendShinyjs(
@@ -80,6 +98,12 @@ ui <- dashboardPage(
       # Summary dashboard
       tabItem(
         tabName = "summary_tab",
+        
+        # Fade screen when loading
+        conditionalPanel(
+          condition="$('html').hasClass('shiny-busy')",
+          tags$div("Loading...",id="loading")
+        ),
 
         # Input functions
         wellPanel(
@@ -122,20 +146,17 @@ ui <- dashboardPage(
           condition = "input.submit_button == 0",
           
           # Show trending stats
-         # fluidRow(
-         #   h3("Search Inspiration:")
-         # ),
-         uiOutput("summarybox_trending"),
+          uiOutput("summarybox_trending"),
          
-         # Padding
-         fluidRow(
-           column(width = 6, offset = 0, style='padding:10px;')
-         ),
-         
-         # NZ trending plot
-          fluidRow(
-            highchartOutput('trending_plot')
-          )
+           # Padding
+           fluidRow(
+             column(width = 6, offset = 0, style='padding:10px;')
+           ),
+           
+           # NZ trending plot
+            fluidRow(
+              highchartOutput('trending_plot')
+            )
         ),
         
         # Display after submit 
@@ -220,6 +241,12 @@ ui <- dashboardPage(
         condition="input.submit_button == 0",
         # Ask for input
         h3("Enter a search term on the Summary Dashboard to populate the tweet wall")
+      ),
+      
+      # Fade screen when loading
+      conditionalPanel(
+        condition="$('html').hasClass('shiny-busy')",
+        tags$div("Loading...",id="loading")
       ),
 
       # Ouput functions
