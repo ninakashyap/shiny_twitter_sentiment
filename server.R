@@ -26,6 +26,13 @@ server <- function(input, output) {
   
   # Get data 
   df_tweets <- eventReactive(input$submit_button, {
+    
+    # Disable download button if empty search term
+    if (input$search_term == '') {
+      disable('download_raw_data')
+      disable('download_sentiment_data')
+    }
+    
     # Check not an empty search term
     validate(
       need(
@@ -36,7 +43,13 @@ server <- function(input, output) {
         )
     )
     
+    # Disable download button if empty dataset 
     d <- get_tweets(input$search_term, input$n_tweets) 
+    
+    if (nrow(d) == 0){
+      disable('download_raw_data')
+      disable('download_sentiment_data')
+    }
     
     # Check not empty dataset
     validate(
@@ -50,18 +63,7 @@ server <- function(input, output) {
     
     d
     })
-  # 
-  # df_tweets <- eventReactive(df_tweets(), {
-  #   validate(
-  #     need(
-  #       nrow(df_tweets()) != 0, 
-  #       paste(
-  #         "No results available ",
-  #         ji("shrug"))
-  #     )
-  #   )
-  #   df_tweets()
-  # })
+
     
   # Refresh the `twitter_output` div
   observeEvent(df_tweets(), {
