@@ -24,11 +24,16 @@ get_wordcount_df <- function(d, search_word) {
     filter(!str_detect(word,"\\b\\d+\\b"),
            #!str_detect(word, tolower(search_word)),
            word != tolower(search_word),
-           !(word %in% c("it's",
+           !(word %in% c("it’s",
                          "it",
                          "its",
+                         "don’t",
+                         "i’m",
+                         "i’ve",
+                         "it's",
                          "don't",
-                         "i'm")
+                         "i'm",
+                         "i've")
              )
            ) %>% 
     # Uppercase first letter
